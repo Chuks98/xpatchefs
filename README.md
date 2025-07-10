@@ -7,7 +7,6 @@ Welcome to **Xpatchefs**, a culinary platform that connects people with world-cl
 ## 🌍 Live Preview
 
 🔗 [View the Website](https://Chuks98.github.io/xpatchefs/)  
-*(Replace with your actual GitHub Pages URL after deployment)*
 
 ---
 
