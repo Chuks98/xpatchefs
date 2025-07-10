@@ -333,3 +333,8 @@ function toggleFAQ(button) {
 		answer.classList.add('active');
 	}
 }
+
+
+
+// The footer year fetch
+document.getElementById("currentYear").textContent = new Date().getFullYear();
