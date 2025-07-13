@@ -935,6 +935,8 @@ html, body{ height: 100%; }
 	background-attachment:fixed;
 	background-size:cover;
 	position:relative;
+    display: flex;
+    justify-content: center;
 }
 
 .team-main:before {
@@ -950,6 +952,11 @@ html, body{ height: 100%; }
 
 .team-main .block-title{
 	color:#fff;
+}
+
+#slizzy {
+    display: flex;
+    justify-content: center;
 }
 
 .sf-team{

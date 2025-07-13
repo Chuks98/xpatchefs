@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Xpatchefs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .contact-subtitle {
+            font-size: 1.1rem;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .option-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .option-card p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .service-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .service-option {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-option:hover {
+            background: #e9ecef;
+        }
+
+        .service-option.selected {
+            background: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .contact-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="contact-header">
+            <h2 class="contact-title">Get In Touch</h2>
+            <p class="contact-subtitle">
+                Ready to make your event unforgettable? Contact us today to discuss your catering needs.
+            </p>
+        </div>
+
+        <!-- Contact Options -->
+        <div class="form-options">
+            <div class="option-card">
+                <h3>📧 Email Form</h3>
+                <p>Fill out our contact form below and we'll get back to you within 24 hours.</p>
+                <button class="btn" onclick="showContactForm()">Use Contact Form</button>
+            </div>
+            
+            <div class="option-card">
+                <h3>📱 WhatsApp</h3>
+                <p>Get instant responses by messaging us directly on WhatsApp.</p>
+                <a href="https://wa.me/2348012345678?text=Hello%20Xpatchefs,%20I'm%20interested%20in%20your%20catering%20services" class="btn btn-secondary" target="_blank">Message on WhatsApp</a>
+            </div>
+            
+            <div class="option-card">
+                <h3>📞 Phone Call</h3>
+                <p>Speak directly with our team to discuss your event requirements.</p>
+                <a href="tel:+2348012345678" class="btn btn-secondary">Call Us Now</a>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form" id="contactForm" style="display: none;">
+            <div class="success-message" id="successMessage">
+                Thank you for your message! We'll get back to you within 24 hours.
+            </div>
+            <div class="error-message" id="errorMessage">
+                Sorry, there was an error sending your message. Please try again or contact us directly.
+            </div>
+            <div class="loading" id="loadingMessage">
+                <div class="spinner"></div>
+                <p>Sending your message...</p>
+            </div>
+
+            <form id="contactFormElement">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventType">Event Type *</label>
+                    <select id="eventType" name="eventType" required>
+                        <option value="">Select event type</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="birthday">Birthday Party</option>
+                        <option value="corporate">Corporate Event</option>
+                        <option value="anniversary">Anniversary</option>
+                        <option value="naming">Naming Ceremony</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventDate">Event Date</label>
+                        <input type="date" id="eventDate" name="eventDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestCount">Number of Guests</label>
+                        <input type="number" id="guestCount" name="guestCount" min="1" placeholder="e.g., 50">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Event Location</label>
+                    <input type="text" id="location" name="location" placeholder="City, State">
+                </div>
+
+                <div class="form-group">
+                    <label>Services Needed</label>
+                    <div class="service-selection">
+                        <div class="service-option" onclick="toggleService(this, 'catering')">
+                            🍽️ Catering
+                        </div>
+                        <div class="service-option" onclick="toggleService(this, 'staff')">
+                            👥 Wait Staff
+                        </div>
+                        <div class="service-option" onclick="toggleService(this, 'setup')">
+                            🎪 Event Setup
+                        </div>
+                        <div class="service-option" onclick="toggleService(this, 'cleanup')">
+                            🧹 Cleanup
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Additional Details *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your event, dietary requirements, preferred cuisine, budget range, or any special requests..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Store selected services
+        let selectedServices = [];
+
+        function showContactForm() {
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleService(element, service) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedServices = selectedServices.filter(s => s !== service);
+            } else {
+                element.classList.add('selected');
+                selectedServices.push(service);
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('contactFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            data.services = selectedServices;
+            
+            // Show loading
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // OPTION 1: EmailJS (Recommended - Free tier available)
+            submitWithEmailJS(data);
+            
+            // OPTION 2: Formspree (Alternative)
+            // submitWithFormspree(data);
+            
+            // OPTION 3: Netlify Forms (If hosting on Netlify)
+            // This form will work automatically on Netlify
+        });
+
+        // EmailJS Integration (Sign up at emailjs.com)
+        function submitWithEmailJS(data) {
+            // Replace with your EmailJS credentials
+            const serviceID = 'your_service_id';
+            const templateID = 'your_template_id';
+            const userID = 'your_user_id';
+            
+            // EmailJS send function
+            emailjs.send(serviceID, templateID, {
+                from_name: data.firstName + ' ' + data.lastName,
+                from_email: data.email,
+                phone: data.phone,
+                event_type: data.eventType,
+                event_date: data.eventDate,
+                guest_count: data.guestCount,
+                location: data.location,
+                services: data.services.join(', '),
+                message: data.message
+            }, userID)
+            .then(function(response) {
+                showSuccess();
+            }, function(error) {
+                showError();
+            });
+        }
+
+        // Formspree Integration (Alternative)
+        function submitWithFormspree(data) {
+            fetch('https://formspree.io/f/your_form_id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    showSuccess();
+                } else {
+                    showError();
+                }
+            })
+            .catch(error => {
+                showError();
+            });
+        }
+
+        function showSuccess() {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('contactFormElement').reset();
+            selectedServices = [];
+            document.querySelectorAll('.service-option').forEach(el => el.classList.remove('selected'));
+        }
+
+        function showError() {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+
+        // Set minimum date to today
+        document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+    </script>
+
+    <!-- EmailJS SDK (uncomment when using EmailJS) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> -->
+</body>
+</html>
